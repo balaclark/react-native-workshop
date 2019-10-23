@@ -6,33 +6,44 @@
  * @flow
  */
 
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, View, StatusBar, Button} from 'react-native';
+import React from 'react';
+import {SafeAreaView, StyleSheet, View, StatusBar} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 import ConversationsScreen from './src/screens/Conversations';
 import ChatViewScreen from './src/screens/ChatViewScreen';
 
-const screens = {
-  ConversationsScreen,
-  ChatViewScreen,
-};
+const AppNavigator = createStackNavigator(
+  {
+    Conversations: {
+      screen: ConversationsScreen,
+      path: '/',
+      navigationOptions: () => ({
+        title: 'Conversations',
+      }),
+    },
+    Chat: ChatViewScreen,
+  },
+  {
+    initialRouteName: 'Conversations',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'green',
+        color: 'white',
+      },
+    },
+  },
+);
 
-const App: () => React$Node = () => {
-  const [activeScreen, setActiveScreen] = useState('ConversationsScreen');
-  const Screen = screens[activeScreen];
+const AppContainer = createAppContainer(AppNavigator);
+
+const App = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-          <Screen />
-          <Button
-            title="Conversations"
-            onPress={() => setActiveScreen('ConversationsScreen')}
-          />
-          <Button
-            title="Chat"
-            onPress={() => setActiveScreen('ChatViewScreen')}
-          />
+          <AppContainer />
         </View>
       </SafeAreaView>
     </>
