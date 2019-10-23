@@ -34,11 +34,11 @@ const CONVERSATION_SUBSCRIPTION = gql`
   }
 `;
 
-const ChatListItem = ({index, user, message, incoming}) => (
+const ChatListItem = ({index, user, message}) => (
   <Animatable.View
-    animation={`bounceIn${incoming ? 'Left' : 'Right'}`}
+    animation={`bounceIn${user ? 'Left' : 'Right'}`}
     delay={index * 250 * 0.8}
-    style={incoming ? styles.item : styles.outgoingItem}>
+    style={user ? styles.item : styles.outgoingItem}>
     <Image
       resizeMethod="scale"
       style={styles.avatar}
