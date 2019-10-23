@@ -10,16 +10,20 @@ import {
   View,
   YellowBox,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
-const ChatListItem = ({avatar, message, incoming}) => (
-  <View style={incoming ? styles.item : styles.outgoingItem}>
+const ChatListItem = ({index, avatar, message, incoming}) => (
+  <Animatable.View
+    animation={`bounceIn${incoming ? 'Left' : 'Right'}`}
+    delay={index * 250 * 0.8}
+    style={incoming ? styles.item : styles.outgoingItem}>
     <Image resizeMethod="scale" style={styles.avatar} source={{uri: avatar}} />
     <View style={styles.itemContent}>
       <Text style={styles.description}>{message}</Text>
     </View>
-  </View>
+  </Animatable.View>
 );
 
 const ChatViewScreen = ({navigation}) => {
@@ -27,9 +31,10 @@ const ChatViewScreen = ({navigation}) => {
     <View style={styles.container}>
       <FlatList
         data={navigation.getParam('messages')}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <ChatListItem
             {...item}
+            index={index}
             avatar={
               item.incoming
                 ? navigation.getParam('avatar')
