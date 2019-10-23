@@ -34,8 +34,7 @@ const AppNavigator = createStackNavigator(
     initialRouteName: 'Conversations',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: 'lightgreen',
-        color: 'white',
+        backgroundColor: 'darkgreen',
       },
     },
   },
@@ -46,8 +45,8 @@ const AppContainer = createAppContainer(AppNavigator);
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="darkgreen" />
+      <SafeAreaView style={[styles.container, {backgroundColor: 'darkgreen'}]}>
         <View style={styles.container}>
           <AppContainer />
         </View>

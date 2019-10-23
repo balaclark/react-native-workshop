@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    padding: 20,
+    padding: Platform.OS === 'ios' ? 20 : null,
     backgroundColor: 'white',
-    borderTopColor: '#d1c858',
+    borderTopColor: 'darkgreen',
     borderTopWidth: 1,
   },
 });
