@@ -7,17 +7,7 @@
  */
 
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-  Platform,
-  Button,
-} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
+import {SafeAreaView, StyleSheet, View, StatusBar, Button} from 'react-native';
 import ConversationsScreen from './src/screens/Conversations';
 import ChatViewScreen from './src/screens/ChatViewScreen';
 
@@ -52,25 +42,6 @@ const App: () => React$Node = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#151019',
-  },
-  welcome: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    width: '80%',
-  },
-  instructions: {
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: 10,
-    fontSize: 15,
-  },
-  workshopInstructions: {
-    alignItems: 'flex-start',
   },
 });
 

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {Text, StyleSheet} from 'react-native';
 
-const ChatViewScreen = () => (
-  <>
-    <Text style={styles.welcome}>Chat</Text>
-  </>
-);
+const ChatViewScreen = () => {
+  return (
+    <>
+      <Text style={styles.welcome}>Chat</Text>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
