@@ -14,7 +14,7 @@ import {
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const ChatListItem = ({avatar, message, incoming}) => (
-  <View style={styles.item}>
+  <View style={incoming ? styles.item : styles.outgoingItem}>
     <Image resizeMethod="scale" style={styles.avatar} source={{uri: avatar}} />
     <View style={styles.itemContent}>
       <Text style={styles.description}>{message}</Text>
@@ -50,21 +50,32 @@ const ChatViewScreen = ({navigation}) => {
 
 const baseFontSize = 20;
 
+const item = {
+  backgroundColor: 'lightgreen',
+  borderBottomColor: 'darkgreen',
+  borderBottomWidth: 10,
+  padding: 20,
+  marginVertical: 8,
+  marginHorizontal: 16,
+  height: 150,
+  flex: 1,
+  flexDirection: 'row',
+  // width: '75%',
+  borderRadius: 5,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    backgroundColor: 'lightyellow',
   },
-  item: {
-    backgroundColor: 'lightgreen',
-    borderBottomColor: 'darkgreen',
-    borderBottomWidth: 10,
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    height: 150,
-    flex: 1,
-    flexDirection: 'row',
+  item,
+  outgoingItem: {
+    ...item,
+    backgroundColor: '#fff466',
+    borderBottomColor: '#d1c858',
+    flexDirection: 'row-reverse',
   },
   title: {
     fontSize: baseFontSize,
@@ -88,6 +99,9 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     padding: 20,
+    backgroundColor: 'white',
+    borderTopColor: '#d1c858',
+    borderTopWidth: 1,
   },
 });
 

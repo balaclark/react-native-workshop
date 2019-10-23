@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgreen',
     borderBottomColor: 'darkgreen',
     borderBottomWidth: 10,
+    borderRadius: 5,
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

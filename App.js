@@ -34,7 +34,7 @@ const AppNavigator = createStackNavigator(
     initialRouteName: 'Conversations',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: 'green',
+        backgroundColor: 'lightgreen',
         color: 'white',
       },
     },
