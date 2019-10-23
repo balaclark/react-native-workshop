@@ -12,15 +12,38 @@ import {
   YellowBox,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {useSubscription} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
-const ChatListItem = ({index, avatar, message, incoming}) => (
+const CONVERSATION_SUBSCRIPTION = gql`
+  subscription getConversation($id: uuid) {
+    conversations(where: {id: {_eq: $id}}) {
+      id
+      title
+      description
+      chats {
+        message
+      }
+      user {
+        avatar
+        name
+      }
+    }
+  }
+`;
+
+const ChatListItem = ({index, user, message, incoming}) => (
   <Animatable.View
     animation={`bounceIn${incoming ? 'Left' : 'Right'}`}
     delay={index * 250 * 0.8}
     style={incoming ? styles.item : styles.outgoingItem}>
-    <Image resizeMethod="scale" style={styles.avatar} source={{uri: avatar}} />
+    <Image
+      resizeMethod="scale"
+      style={styles.avatar}
+      source={{uri: user ? user.avatar : 'https://i.pravatar.cc/150?img=50'}}
+    />
     <View style={styles.itemContent}>
       <Text style={styles.description}>{message}</Text>
     </View>
@@ -28,20 +51,25 @@ const ChatListItem = ({index, avatar, message, incoming}) => (
 );
 
 const ChatViewScreen = ({navigation}) => {
+  const {data: {conversations = []} = {}, loading} = useSubscription(
+    CONVERSATION_SUBSCRIPTION,
+    {
+      variables: {
+        id: navigation.getParam('id'),
+      },
+    },
+  );
+
+  if (!conversations.length) return null;
+
+  const conversation = conversations[0];
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={navigation.getParam('messages')}
+        data={conversation.chats}
         renderItem={({item, index}) => (
-          <ChatListItem
-            {...item}
-            index={index}
-            avatar={
-              item.incoming
-                ? navigation.getParam('avatar')
-                : 'https://i.pravatar.cc/150?img=50'
-            }
-          />
+          <ChatListItem {...item} index={index} user={conversation.user} />
         )}
         keyExtractor={(item, index) => item.message + index}
       />
@@ -126,3 +154,7 @@ const styles = StyleSheet.create({
 });
 
 export default ChatViewScreen;
+
+/* TODO
+ * outgoing message mutation
+ */

@@ -62,8 +62,6 @@ const ConversationsScreen = ({navigation}) => {
     CONVERSATIONS_SUBSCRIPTION,
   );
 
-  console.log(conversations);
-
   return (
     <View style={styles.container}>
       <FlatList
