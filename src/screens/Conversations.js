@@ -18,7 +18,7 @@ const ConversationListItem = ({
   navigation,
 }) => (
   <TouchableHighlight
-    onPress={() => navigation.navigate('Chat', {id})}
+    onPress={() => navigation.navigate('Chat', {title, avatar, messages})}
     underlayColor="white">
     <View style={styles.item}>
       <Image

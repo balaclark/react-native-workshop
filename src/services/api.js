@@ -1,11 +1,15 @@
 export const mockMessages = [
   {
     incoming: true,
-    message: 'Hi Vladimir',
+    message: 'Oi',
   },
   {
     incoming: false,
     message: 'Hello',
+  },
+  {
+    incoming: true,
+    message: 'Wassup?',
   },
 ];
 

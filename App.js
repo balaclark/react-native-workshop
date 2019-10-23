@@ -22,7 +22,13 @@ const AppNavigator = createStackNavigator(
         title: 'Conversations',
       }),
     },
-    Chat: ChatViewScreen,
+    Chat: {
+      screen: ChatViewScreen,
+      path: '/chat/:id',
+      navigationOptions: ({navigation}) => ({
+        title: navigation.getParam('title', 'Chat'),
+      }),
+    },
   },
   {
     initialRouteName: 'Conversations',
