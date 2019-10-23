@@ -1,6 +1,17 @@
 import React from 'react';
-import {FlatList, StyleSheet, View, Text, Image} from 'react-native';
-import {getConversations} from '../services/api';
+import {
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  YellowBox,
+} from 'react-native';
+
+YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const ChatListItem = ({avatar, message, incoming}) => (
   <View style={styles.item}>
@@ -28,6 +39,11 @@ const ChatViewScreen = ({navigation}) => {
         )}
         keyExtractor={(item, index) => item.message + index}
       />
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 130 : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}>
+        <TextInput style={styles.input} placeholder="Chit-chat goes here..." />
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -68,6 +84,10 @@ const styles = StyleSheet.create({
   },
   arrow: {
     color: 'rgba(0,0,0,.5)',
+  },
+  input: {
+    height: 50,
+    padding: 20,
   },
 });
 
