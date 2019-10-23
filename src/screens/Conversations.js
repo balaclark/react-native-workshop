@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -7,18 +7,34 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
-import {getConversations} from '../services/api';
+import {useSubscription} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
+const CONVERSATIONS_SUBSCRIPTION = gql`
+  subscription {
+    conversations {
+      id
+      description
+      user {
+        name
+        avatar
+      }
+      chats {
+        message
+      }
+    }
+  }
+`;
 
 const ConversationListItem = ({
   id,
-  title,
   description,
-  avatar,
-  messages,
+  user: {avatar, name},
+  chats,
   navigation,
 }) => (
   <TouchableHighlight
-    onPress={() => navigation.navigate('Chat', {title, avatar, messages})}
+    onPress={() => navigation.navigate('Chat', {id})}
     underlayColor="white">
     <View style={styles.item}>
       <Image
@@ -27,8 +43,8 @@ const ConversationListItem = ({
         source={{uri: avatar}}
       />
       <View style={styles.itemContent}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.description}>{chats[0].message}</Text>
       </View>
       <View>
         <Text style={styles.when}>Yesterday</Text>
@@ -37,12 +53,16 @@ const ConversationListItem = ({
   </TouchableHighlight>
 );
 
-const ConversationsScreen = ({navigation}) => {
-  const [conversations, setConversations] = useState([]);
+const NoConversations = () => (
+  <Text style={styles.container}>No conversations yet</Text>
+);
 
-  useEffect(() => {
-    getConversations().then(setConversations);
-  }, []);
+const ConversationsScreen = ({navigation}) => {
+  const {data: {conversations} = {}, loading} = useSubscription(
+    CONVERSATIONS_SUBSCRIPTION,
+  );
+
+  console.log(conversations);
 
   return (
     <View style={styles.container}>
@@ -51,6 +71,7 @@ const ConversationsScreen = ({navigation}) => {
         renderItem={({item}) => (
           <ConversationListItem {...item} navigation={navigation} />
         )}
+        ListEmptyComponent={() => <NoConversations />}
         keyExtractor={item => item.id}
       />
     </View>
