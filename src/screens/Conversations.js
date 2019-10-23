@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {FlatList, StyleSheet, View, Text, Image} from 'react-native';
 import {getConversations} from '../services/api';
-import RightChevron from '../svg/right-chevron.svg';
 
 const ConversationListItem = ({title, description, avatar, messages}) => (
   <View style={styles.item}>
@@ -12,7 +11,6 @@ const ConversationListItem = ({title, description, avatar, messages}) => (
     </View>
     <View>
       <Text style={styles.when}>Yesterday</Text>
-      <RightChevron width={25} height={25} />
     </View>
   </View>
 );
@@ -68,6 +66,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: 100,
     height: 100,
+  },
+  arrow: {
+    color: 'rgba(0,0,0,.5)',
   },
 });
 
