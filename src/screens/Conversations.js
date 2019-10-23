@@ -44,7 +44,9 @@ const ConversationListItem = ({
       />
       <View style={styles.itemContent}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.description}>{chats[0].message}</Text>
+        <Text style={styles.description}>
+          {chats[chats.length - 1].message}
+        </Text>
       </View>
       <View>
         <Text style={styles.when}>Yesterday</Text>
