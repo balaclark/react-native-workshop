@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -47,7 +48,13 @@ const ChatViewScreen = ({navigation}) => {
       <KeyboardAvoidingView
         keyboardVerticalOffset={Platform.OS === 'ios' ? 130 : 0}
         behavior={Platform.OS === 'ios' ? 'padding' : null}>
-        <TextInput style={styles.input} placeholder="Chit-chat goes here..." />
+        <View style={styles.compose}>
+          <TextInput
+            style={styles.input}
+            placeholder="Chit-chat goes here..."
+          />
+          <Button onPress={() => alert('submit...')} title="Send" />
+        </View>
       </KeyboardAvoidingView>
     </View>
   );
@@ -103,10 +110,18 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    padding: Platform.OS === 'ios' ? 20 : null,
+    paddingHorizontal: 20,
+    width: '85%',
     backgroundColor: 'white',
-    borderTopColor: 'darkgreen',
-    borderTopWidth: 1,
+    borderWidth: 1,
+    borderColor: 'lightgreen',
+    borderRadius: 100,
+  },
+  compose: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 10,
   },
 });
 
